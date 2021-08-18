@@ -126,7 +126,7 @@ public class UmengAnalyticsPushPlugin implements FlutterPlugin, MethodCallHandle
   private void event(MethodCall call, Result result) {
     String eventId = call.argument("eventId");
     String label = call.argument("label");
-    Map<String, String> map = call.argument("properties") ;
+    Map<String, Object> map = call.argument("properties") ;
     if(map != null) {
       MobclickAgent.onEventObject(context, eventId, map);
     } else {
