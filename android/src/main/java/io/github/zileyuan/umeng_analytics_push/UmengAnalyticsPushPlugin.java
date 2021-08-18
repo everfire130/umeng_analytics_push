@@ -21,6 +21,7 @@ import com.umeng.message.tag.TagManager;
 import com.umeng.message.common.inter.ITagManager;
 import com.umeng.analytics.MobclickAgent;
 import android.util.Log;
+import java.util.Map;
 
 /** UmengAnalyticsPushPlugin */
 public class UmengAnalyticsPushPlugin implements FlutterPlugin, MethodCallHandler {
