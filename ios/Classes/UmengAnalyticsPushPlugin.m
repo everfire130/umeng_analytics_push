@@ -59,7 +59,7 @@ FlutterEventSink _eventSink;
 - (void)event:(FlutterMethodCall*)call result:(FlutterResult)result {
     NSString* eventId = call.arguments[@"eventId"];
     NSString* label = call.arguments[@"label"];
-    NSDictionary* properties = arguments[@"properties"];
+    NSDictionary* properties = call.arguments[@"properties"];
     if (label == nil) {
         [MobClick event:eventId attributes: properties];
     } else {
