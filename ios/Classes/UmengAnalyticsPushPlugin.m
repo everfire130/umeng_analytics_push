@@ -49,7 +49,7 @@ FlutterEventSink _eventSink;
       [self event:call result:result];
   } else if ([@"deviceToken" isEqualToString:call.method]) {
     [self deviceToken:call result:result];
-  }  else if ([@"reportError" isEqualToString:call.method] {
+  }  else if ([@"reportError" isEqualToString:call.method]) {
     [self reportError:call result:result];
   } else {
       result(FlutterMethodNotImplemented);
