@@ -49,6 +49,8 @@ FlutterEventSink _eventSink;
       [self event:call result:result];
   } else if ([@"deviceToken" isEqualToString:call.method]) {
     [self deviceToken:call result:result];
+  }  else if ([@"reportError" isEqualToString:call.method] {
+    [self reportError:call result:result];
   } else {
       result(FlutterMethodNotImplemented);
   }
@@ -57,8 +59,9 @@ FlutterEventSink _eventSink;
 - (void)event:(FlutterMethodCall*)call result:(FlutterResult)result {
     NSString* eventId = call.arguments[@"eventId"];
     NSString* label = call.arguments[@"label"];
+    NSDictionary* properties = arguments[@"properties"];
     if (label == nil) {
-        [MobClick event:eventId];
+        [MobClick event:eventId attributes: properties];
     } else {
         [MobClick event:eventId label:label];
     }
@@ -117,6 +120,10 @@ FlutterEventSink _eventSink;
   BOOL logEnabled = [call.arguments[@"logEnabled"] boolValue];
   BOOL pushEnabled = [call.arguments[@"pushEnabled"] boolValue];
   [UmengAnalyticsPushFlutterIos iosInit:logEnabled pushEnabled:pushEnabled];
+}
+
+- (void)reportError:(FlutterMethodCall *)call result:(FlutterResult)result {
+  
 }
 
 @end

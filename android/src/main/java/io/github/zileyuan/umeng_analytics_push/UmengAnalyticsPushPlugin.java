@@ -115,6 +115,8 @@ public class UmengAnalyticsPushPlugin implements FlutterPlugin, MethodCallHandle
       event(call, result);
     } else if (call.method.equals("deviceToken")) {
       deviceToken(call, result);
+    } else if (call.method.equals("reportError")) {
+      reportError(call, result);
     } else {
       result.notImplemented();
     }
@@ -123,7 +125,12 @@ public class UmengAnalyticsPushPlugin implements FlutterPlugin, MethodCallHandle
   private void event(MethodCall call, Result result) {
     String eventId = call.argument("eventId");
     String label = call.argument("label");
-    MobclickAgent.onEvent(context, eventId, label);
+    Map map = call.argument("properties") ;
+    if(map != null) {
+      MobclickAgent.onEventObject(context, eventId, map);
+    } else {
+      MobclickAgent.onEvent(context, eventId, label);
+    }
   }
 
   private void pageStart(MethodCall call, Result result) {
@@ -199,7 +206,6 @@ public class UmengAnalyticsPushPlugin implements FlutterPlugin, MethodCallHandle
     }
   }
 
-
   private void deviceToken(MethodCall call, Result result) {
     String deviceToken = UmengAnalyticsPushFlutterAndroid.UmengPushAgent.getRegistrationId();
     result.success(deviceToken);
@@ -209,6 +215,11 @@ public class UmengAnalyticsPushPlugin implements FlutterPlugin, MethodCallHandle
     boolean logEnabled = call.argument("logEnabled");
     boolean pushEnabled = call.argument("pushEnabled");
     UmengAnalyticsPushFlutterAndroid.androidInit(logEnabled, pushEnabled);
+  }
+
+  private void reportError(MethodCall call, Result result) {
+    String error = call.argument("error");    
+    MobclickAgent.reportError(context, error);
   }
 
 }

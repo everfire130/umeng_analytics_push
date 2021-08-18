@@ -78,11 +78,18 @@ class UmengAnalyticsPush {
   }
 
   /// Record custom event for [eventId] with [label]
-  static Future<void> event(String eventId, {String? label}) async {
-    Map<String, dynamic> args = {'eventId': eventId};
+  static Future<void> event(String eventId,
+      {String? label, Map<String, dynamic>? properties}) async {
+    Map<String, dynamic> args = {'eventId': eventId, 'properties': properties};
     if (label != null && label.isNotEmpty) {
       args['label'] = label;
     }
+    await _methodChannel.invokeMethod('event', args);
+  }
+
+  /// Report custom error
+  static Future<void> reportError(String error) async {
+    final args = {'error': error};
     await _methodChannel.invokeMethod('event', args);
   }
 
